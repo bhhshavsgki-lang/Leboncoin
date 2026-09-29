@@ -1,46 +1,62 @@
-# Leboncoin Deal Finder
+# Leboncoin Deal Finder — mode local
 
-Moniteur personnel basé sur les alertes officielles Leboncoin. Il lit les nouvelles annonces reçues par e-mail, applique des filtres locaux, demande une analyse structurée à un modèle IA, mémorise les annonces déjà traitées et ajoute les opportunités intéressantes à un rapport Markdown versionné.
+Cette version est entièrement locale et rule-based : **pas de Gmail, pas d'IA, pas de Telegram et pas de dépendance externe**.
 
-## Principe important
+Le workflow GitHub Actions lit les annonces placées dans `data/input_ads.json`, applique les règles de prix, distance, mots-clés et risque, puis ajoute les bonnes affaires à `data/good_deals.md`. Il conserve les annonces déjà traitées dans `data/state.json`.
 
-Le projet ne parcourt pas automatiquement les pages de recherche Leboncoin et ne contourne ni CAPTCHA ni protection. Il utilise les alertes/recherches configurées dans le compte Leboncoin. Le message au vendeur est généré comme **brouillon** ; l’utilisateur ouvre ensuite l’annonce et décide de l’envoyer.
+## Fonctionnement
 
-## Fonctionnalités
+```text
+data/input_ads.json
+        ↓
+filtre prix + distance + mots-clés + risques
+        ↓
+data/good_deals.md
+        ↓
+commit automatique GitHub
+```
 
-- Plusieurs recherches et catégories configurables.
-- Distance maximale de 50 km par défaut.
-- Score déterministe : prix, ancienneté, distance, mots-clés et signaux de risque.
-- Deuxième analyse IA avec sortie JSON stricte : adéquation, prix estimé, risque d’arnaque, qualité de l’annonce, urgence et recommandation.
-- Mémoire persistante dans `data/state.json` : annonces vues, prix observés, décisions et brouillons.
-- Déduplication par identifiant ou URL normalisée.
-- Rapport lisible dans `data/good_deals.md`, enrichi avec une nouvelle section datée à chaque bonne affaire.
-- Le workflow GitHub se relance automatiquement toutes les six heures et sauvegarde l’état dans Git.
-- Mode `DRY_RUN=1` pour tester sans envoyer de notification.
+Le workflow se lance toutes les six heures ou manuellement depuis l'onglet **Actions**. Il n'utilise aucun secret.
 
-## Installation rapide
+## Ajouter une annonce à analyser
 
-1. Copier `config/settings.example.json` vers `config/settings.json` et personnaliser les recherches.
-2. Configurer les secrets GitHub :
-   - `IMAP_USERNAME`, `IMAP_PASSWORD` pour lire les alertes Gmail ;
-   - `OPENAI_API_KEY` pour l’analyse IA.
-3. Activer les alertes e-mail dans **Mes recherches** sur Leboncoin.
-4. Tester localement avec `DRY_RUN=1 python -m src.main`.
-5. Activer le workflow GitHub Actions.
+Modifier `data/input_ads.json` :
 
-Le modèle par défaut est `gpt-5-mini`, adapté à l’analyse structurée de nombreuses annonces. Pour les cas ambigus, `AI_ESCALATION_MODEL` peut être réglé sur `gpt-5`.
+```json
+[
+  {
+    "title": "iPhone 14 128 Go",
+    "url": "https://www.leboncoin.fr/ad/...",
+    "price_eur": 280,
+    "location": "Paris 75001",
+    "latitude": 48.8666,
+    "longitude": 2.3522,
+    "description": "Très bon état, facture disponible, remise en main propre.",
+    "published_at": "2026-09-29T10:00:00Z",
+    "image_urls": [],
+    "source_search": "iPhone 14 128 Go"
+  }
+]
+```
 
-## Rapport des bonnes affaires
+Une bonne affaire est ajoutée à `data/good_deals.md` avec le prix, la distance, le score, les signaux détectés, le lien et un brouillon de message au vendeur. Le message n'est jamais envoyé automatiquement.
 
-Le workflow lit les alertes Leboncoin dans Gmail, mais n’envoie aucun e-mail, message Telegram ou message Discord. Chaque opportunité retenue est ajoutée dans `data/good_deals.md`, avec la date, le lien, le score, le risque, les questions à poser et un brouillon de message au vendeur. Le workflow commit ce fichier dans le dépôt après chaque exécution.
+## Configuration
 
-## Messages au vendeur
+Personnaliser `config/settings.json` à partir de `config/settings.example.json`. La configuration contient la localisation, le rayon de 50 km, les recherches, les prix maximum et les mots à rejeter. La section `ai` de l'ancien exemple n'est pas utilisée dans ce mode et peut être supprimée.
 
-Pour chaque annonce retenue, le système crée un brouillon dans `data/state.json` avec une formulation polie et des questions utiles. Il ne se connecte pas au compte Leboncoin et n’envoie pas automatiquement le message. Cette séparation évite les messages involontaires et laisse le contrôle final à l’utilisateur.
+## Limitation importante
 
-## Limites
+Sans Gmail, API autorisée ou autre source d'annonces, GitHub ne peut pas découvrir tout seul les nouvelles annonces publiées sur Leboncoin. Il analyse uniquement les annonces présentes dans `data/input_ads.json`. Il faut donc ajouter les annonces à ce fichier, ou réactiver ultérieurement une source d'alertes autorisée.
 
-- Une alerte e-mail peut arriver avec retard.
-- L’analyse IA est une aide à la décision, pas une garantie d’authenticité.
-- Le prix de référence est calculé à partir de l’historique local et des valeurs fournies dans la configuration ; il devient meilleur après plusieurs exécutions.
-- Il faut conserver les secrets uniquement dans GitHub Secrets, jamais dans le dépôt.
+## Exécution locale
+
+```bash
+python -m src.main
+```
+
+Les tests utilisent uniquement Python standard et peuvent être exécutés avec :
+
+```bash
+python -m pytest -q
+```

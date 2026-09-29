@@ -1,4 +1,1 @@
-openai>=1.40.0
-python-dateutil>=2.9.0
-beautifulsoup4>=4.12.3
-requests>=2.32.0
+# No external packages required. The monitor uses only the Python standard library.

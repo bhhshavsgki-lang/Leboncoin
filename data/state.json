@@ -1,7 +1,63 @@
 {
-  "seen": {},
-  "price_history": {},
-  "decisions": {},
-  "drafts": [],
-  "runs": []
+  "seen": {
+    "74f0db150d7ae2afc7977290": {
+      "first_seen": "2026-09-29T12:02:34.770480+00:00",
+      "listing": {
+        "title": "iPhone 14 128 Go",
+        "url": "https://www.leboncoin.fr/ad/telephones_objets_connectes/EXEMPLE-1",
+        "price_eur": 280.0,
+        "location": "Paris 75001",
+        "latitude": 48.8666,
+        "longitude": 2.3522,
+        "description": "Très bon état, facture disponible, remise en main propre. Produit testé.",
+        "published_at": "2026-09-29T10:00:00Z",
+        "image_urls": [
+          "https://example.com/photo.jpg"
+        ],
+        "source_email_date": "",
+        "source_search": "iPhone 14 128 Go",
+        "id": "74f0db150d7ae2afc7977290"
+      }
+    }
+  },
+  "price_history": {
+    "iPhone 14 128 Go": [
+      280.0
+    ]
+  },
+  "decisions": {
+    "74f0db150d7ae2afc7977290": {
+      "at": "2026-09-29T12:02:34.770480+00:00",
+      "decision": {
+        "recommendation": "notify",
+        "ai_score": 83,
+        "risk_score": 0,
+        "confidence": 100,
+        "estimated_fair_price_eur": 430,
+        "reasoning_summary": "sous le budget; prix très inférieur à la référence; proche",
+        "questions_for_seller": [
+          "Le produit est-il toujours disponible ?",
+          "Avez-vous une facture ou une preuve d'achat ?"
+        ],
+        "message_draft_fr": "Bonjour, votre article est-il toujours disponible ? Est-il possible de le voir et de vérifier son état avant l'achat ?",
+        "discount_percent": 34.9
+      }
+    }
+  },
+  "drafts": [
+    {
+      "at": "2026-09-29T12:02:34.770498+00:00",
+      "listing_id": "74f0db150d7ae2afc7977290",
+      "url": "https://www.leboncoin.fr/ad/telephones_objets_connectes/EXEMPLE-1",
+      "message": "Bonjour, votre article est-il toujours disponible ? Est-il possible de le voir et de vérifier son état avant l'achat ?"
+    }
+  ],
+  "runs": [
+    {
+      "at": "2026-09-29T12:02:34.770728+00:00",
+      "read": 1,
+      "processed": 1,
+      "saved": 1
+    }
+  ]
 }

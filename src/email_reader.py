@@ -26,8 +26,12 @@ def decode_subject(value: str) -> str:
 
 
 def read_alerts(limit: int = 30) -> list[Listing]:
-    host, port = os.environ["IMAP_HOST"], int(os.getenv("IMAP_PORT", "993"))
-    user, password = os.environ["IMAP_USERNAME"], os.environ["IMAP_PASSWORD"]
+    host = os.getenv("IMAP_HOST") or "imap.gmail.com"
+    port = int(os.getenv("IMAP_PORT") or "993")
+    user = os.getenv("IMAP_USERNAME")
+    password = os.getenv("IMAP_PASSWORD")
+    if not user or not password:
+        raise RuntimeError("IMAP_USERNAME and IMAP_PASSWORD must be configured in GitHub Secrets")
     box = imaplib.IMAP4_SSL(host, port)
     box.login(user, password); box.select("INBOX")
     status, data = box.search(None, '(UNSEEN FROM "leboncoin")')

@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import math
 import re
-from datetime import datetime, timezone
-from dateutil import parser as date_parser
 from .models import Listing
 
 
