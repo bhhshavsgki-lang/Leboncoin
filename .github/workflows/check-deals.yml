@@ -1,4 +1,4 @@
-name: Check Leboncoin alerts
+name: Check local Leboncoin data
 
 on:
   schedule:
@@ -11,7 +11,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,23 +19,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -r requirements.txt
-      - name: Run monitor
-        env:
-          IMAP_HOST: ${{ secrets.IMAP_HOST }}
-          IMAP_PORT: ${{ secrets.IMAP_PORT }}
-          IMAP_USERNAME: ${{ secrets.IMAP_USERNAME }}
-          IMAP_PASSWORD: ${{ secrets.IMAP_PASSWORD }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_BASE: ${{ secrets.OPENAI_API_BASE }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      - name: Run local rule-based monitor
         run: python -m src.main
-      - name: Persist state
+      - name: Persist report and state
         run: |
           git config user.name 'deal-finder-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add data/state.json
-          git diff --cached --quiet || git commit -m "chore: persist monitor state"
+          git add data/state.json data/good_deals.md
+          git diff --cached --quiet || git commit -m "chore: update local deal report"
           git push
