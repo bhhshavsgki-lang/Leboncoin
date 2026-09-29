@@ -1,19 +1,37 @@
 {
   "location": {
-    "name": "À_PERSONNALISER",
+    "name": "Paris 75001 (EXEMPLE À REMPLACER)",
     "latitude": 48.8566,
     "longitude": 2.3522,
     "max_distance_km": 50
   },
   "searches": [
     {
-      "name": "Exemple produit",
-      "keywords": ["produit précis"],
-      "category": "Électronique",
-      "max_price_eur": 500,
-      "reference_price_eur": 450,
+      "name": "iPhone 14 128 Go",
+      "keywords": ["iPhone 14", "128 Go"],
+      "category": "Téléphones & Objets connectés",
+      "max_price_eur": 350,
+      "reference_price_eur": 430,
+      "must_have": ["facture"],
+      "avoid": ["HS", "pour pièces", "bloqué", "iCloud", "recherche", "arnaque", "paiement avant"]
+    },
+    {
+      "name": "PlayStation 5",
+      "keywords": ["PS5", "PlayStation 5"],
+      "category": "Consoles",
+      "max_price_eur": 400,
+      "reference_price_eur": 500,
       "must_have": [],
-      "avoid": ["HS", "pour pièces", "arnaque", "recherche"]
+      "avoid": ["HS", "pour pièces", "sans manette", "compte", "recherche", "arnaque", "paiement avant"]
+    },
+    {
+      "name": "Vélo électrique",
+      "keywords": ["vélo électrique", "vae"],
+      "category": "Vélos",
+      "max_price_eur": 700,
+      "reference_price_eur": 1000,
+      "must_have": [],
+      "avoid": ["HS", "pour pièces", "batterie morte", "sans batterie", "volé", "recherche", "paiement avant"]
     }
   ],
   "decision": {
