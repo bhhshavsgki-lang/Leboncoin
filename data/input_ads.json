@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "title": "iPhone",
+    "url": "https://www.leboncoin.fr/ad/telephones_objets_connectes/EXEMPLE-1",
+    "price_eur": 280,
+    "location": "Paris 75001",
+    "latitude": 48.8666,
+    "longitude": 2.3522,
+    "description": "Très bon état, facture disponible, remise en main propre.",
+    "published_at": "2026-09-29T10:00:00Z",
+    "image_urls": [],
+    "source_search": "iPhone"
+  }
+]
