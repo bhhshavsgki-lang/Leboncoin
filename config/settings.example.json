@@ -1,0 +1,36 @@
+{
+  "location": {
+    "name": "À_PERSONNALISER",
+    "latitude": 48.8566,
+    "longitude": 2.3522,
+    "max_distance_km": 50
+  },
+  "searches": [
+    {
+      "name": "Exemple produit",
+      "keywords": ["produit précis"],
+      "category": "Électronique",
+      "max_price_eur": 500,
+      "reference_price_eur": 450,
+      "must_have": [],
+      "avoid": ["HS", "pour pièces", "arnaque", "recherche"]
+    }
+  ],
+  "decision": {
+    "minimum_fast_score": 45,
+    "minimum_ai_score": 70,
+    "maximum_risk_score": 35,
+    "max_ads_per_run": 30,
+    "keep_state_days": 90
+  },
+  "ai": {
+    "model": "gpt-5-mini",
+    "escalation_model": "gpt-5",
+    "use_escalation_for_score_at_least": 80
+  },
+  "notifications": {
+    "telegram_enabled": true,
+    "discord_enabled": false,
+    "include_drafts": true
+  }
+}
