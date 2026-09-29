@@ -3,7 +3,7 @@
     "74f0db150d7ae2afc7977290": {
       "first_seen": "2026-09-29T12:02:34.770480+00:00",
       "listing": {
-        "title": "pixel",
+        "title": "iPhone 14 128 Go",
         "url": "https://www.leboncoin.fr/ad/telephones_objets_connectes/EXEMPLE-1",
         "price_eur": 280.0,
         "location": "Paris 75001",
@@ -58,18 +58,6 @@
       "read": 1,
       "processed": 1,
       "saved": 1
-    },
-    {
-      "at": "2026-09-29T12:04:22.076401+00:00",
-      "read": 1,
-      "processed": 0,
-      "saved": 0
-    },
-    {
-      "at": "2026-09-29T12:06:13.059149+00:00",
-      "read": 1,
-      "processed": 0,
-      "saved": 0
     }
   ]
 }
